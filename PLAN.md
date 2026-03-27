@@ -122,7 +122,7 @@ todo-list/
   - модель User (id, email, password, role, name)
   - модель Task (id, title, description, dueDate, isCompleted, **priority**, createdAt, userId)
 - [x] Запустить `prisma migrate dev` (применено через Neon SQL Editor)
-- [ ] Создать seed с тестовыми пользователями (admin + несколько user) и задачами
+- [x] Создать seed с тестовыми пользователями (admin + несколько user) и задачами
 
 ### Этап 3 — Бэкенд (Express API)
 - [ ] POST /api/auth/login — возвращает JWT
