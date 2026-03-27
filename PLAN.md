@@ -110,18 +110,18 @@ todo-list/
 ## Этапы реализации
 
 ### Этап 1 — Инициализация проекта
-- [ ] Создать монорепозиторий
-- [ ] Инициализировать Nuxt 3 (`npx nuxi init frontend`)
-- [ ] Инициализировать Express бэкенд (`npm init`)
-- [ ] Настроить TypeScript в обоих проектах
-- [ ] Создать аккаунт на Neon, создать БД
-- [ ] Подключить Prisma к Neon
+- [x] Создать монорепозиторий
+- [x] Инициализировать Nuxt 3 (`npx nuxi init frontend`)
+- [x] Инициализировать Express бэкенд (`npm init`)
+- [x] Настроить TypeScript в обоих проектах
+- [x] Создать аккаунт на Neon, создать БД
+- [x] Подключить Prisma к Neon
 
 ### Этап 2 — База данных (Prisma + Neon)
-- [ ] Написать schema.prisma:
+- [x] Написать schema.prisma:
   - модель User (id, email, password, role, name)
   - модель Task (id, title, description, dueDate, isCompleted, **priority**, createdAt, userId)
-- [ ] Запустить `prisma migrate dev`
+- [x] Запустить `prisma migrate dev` (применено через Neon SQL Editor)
 - [ ] Создать seed с тестовыми пользователями (admin + несколько user) и задачами
 
 ### Этап 3 — Бэкенд (Express API)
