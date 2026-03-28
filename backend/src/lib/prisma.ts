@@ -1,12 +1,18 @@
-import { PrismaNeon } from '@prisma/adapter-neon'
 import { PrismaClient } from '@prisma/client'
-import { Pool } from '@neondatabase/serverless'
 import dotenv from 'dotenv'
 
 dotenv.config()
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL })
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const adapter = new PrismaNeon(pool as any)
+function createPrismaClient(): PrismaClient {
+  if (process.env.NODE_ENV === 'production') {
+    // Vercel serverless: WebSocket-адаптер нужен, т.к. TCP-соединения не поддерживаются
+    const { PrismaNeon } = require('@prisma/adapter-neon')
+    const { Pool } = require('@neondatabase/serverless')
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+    return new PrismaClient({ adapter: new PrismaNeon(pool) })
+  }
+  // Локально: стандартное TCP-подключение, адаптер не нужен
+  return new PrismaClient()
+}
 
-export const prisma = new PrismaClient({ adapter })
+export const prisma = createPrismaClient()

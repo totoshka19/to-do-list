@@ -123,6 +123,8 @@ todo-list/
   - модель Task (id, title, description, dueDate, isCompleted, **priority**, createdAt, userId)
 - [x] Запустить `prisma migrate dev` (применено через Neon SQL Editor)
 - [x] Создать seed с тестовыми пользователями (admin + несколько user) и задачами
+- [x] Условный Prisma-клиент: локально — TCP без адаптера, на Vercel — `PrismaNeon` (WebSocket)
+- [ ] Поднять локальный PostgreSQL и прогнать миграции локально (`createdb todo_list` → `prisma migrate dev`)
 
 ### Этап 3 — Бэкенд (Express API)
 - [x] POST /api/auth/login — возвращает JWT
@@ -133,7 +135,7 @@ todo-list/
 - [x] Auth middleware — проверка JWT, перехват 401
 - [x] Валидация входных данных через zod
 - [x] Обработка ошибок (400, 401, 403, 404, 500)
-- [ ] Настроить vercel.json для serverless деплоя
+- [ ] Настроить vercel.json для serverless деплоя (откладывается до Этапа 8)
 
 ### Этап 4 — Фронтенд: авторизация
 - [x] Страница /login — форма email/password
@@ -169,9 +171,10 @@ todo-list/
 - [ ] Визуализация "нет результатов"
 
 ### Этап 8 — Деплой
+- [ ] Настроить vercel.json для serverless деплоя бэкенда
 - [ ] Деплой бэкенда на Vercel
 - [ ] Деплой фронтенда на Vercel
-- [ ] Настроить переменные окружения (DATABASE_URL, JWT_SECRET)
+- [ ] Настроить переменные окружения на Vercel: `DATABASE_URL`, `DIRECT_URL`, `JWT_SECRET`, `NUXT_PUBLIC_API_BASE`
 - [ ] Проверить работу в продакшене
 
 ### Этап 9 — Финализация
@@ -184,23 +187,23 @@ todo-list/
 ## Чеклист требований ТЗ
 
 ### Обязательная часть
-- [ ] Форма входа email/password
-- [ ] Токен в localStorage
-- [ ] Перехват 401, редирект на логин
+- [x] Форма входа email/password
+- [x] Токен в localStorage
+- [x] Перехват 401, редирект на логин
 - [ ] Список задач с сортировкой
 - [ ] Форма добавления (заголовок, описание, дедлайн, статус)
 - [ ] Редактирование через модалку
 - [ ] Удаление задач
 - [ ] Индикация загрузки
 - [ ] Валидация форм
-- [ ] REST API: GET/POST/PUT/DELETE /api/tasks
-- [ ] POST /api/auth/login с JWT
-- [ ] Модель: Id, Title, Description, DueDate, IsCompleted
-- [ ] Обработка ошибок 400, 404, 500
+- [x] REST API: GET/POST/PUT/DELETE /api/tasks
+- [x] POST /api/auth/login с JWT
+- [x] Модель: Id, Title, Description, DueDate, IsCompleted
+- [x] Обработка ошибок 400, 404, 500
 
 ### Дополнительная часть
-- [ ] Роли (admin, user)
-- [ ] Права на удаление/редактирование только создателю или админу
+- [x] Роли (admin, user)
+- [x] Права на удаление/редактирование только создателю или админу
 - [ ] Поиск с debounce
 - [ ] Пагинация
 - [ ] Фильтрация задач
