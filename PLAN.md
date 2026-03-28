@@ -136,11 +136,11 @@ todo-list/
 - [ ] Настроить vercel.json для serverless деплоя
 
 ### Этап 4 — Фронтенд: авторизация
-- [ ] Страница /login — форма email/password
-- [ ] Pinia store auth.ts: login, logout, токен в localStorage
-- [ ] Axios interceptor — добавлять токен в заголовки
-- [ ] Axios interceptor — перехват 401, редирект на /login
-- [ ] Middleware Nuxt — защита роутов, редирект неавторизованных
+- [x] Страница /login — форма email/password
+- [x] Pinia store auth.ts: login, logout, токен в localStorage
+- [x] Axios interceptor — добавлять токен в заголовки
+- [x] Axios interceptor — перехват 401, редирект на /login
+- [x] Middleware Nuxt — защита роутов, редирект неавторизованных
 
 ### Этап 5 — Фронтенд: список задач
 - [ ] Страница / (index) — отображение списка задач
