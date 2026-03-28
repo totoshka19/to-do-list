@@ -7,18 +7,25 @@
       </div>
 
       <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        <form @submit.prevent="handleSubmit">
+        <form novalidate @submit.prevent="handleSubmit">
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
               v-model="form.email"
               type="email"
               placeholder="you@example.com"
-              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              :class="{ 'border-red-400': errors.email }"
+              class="w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-colors"
+              :class="errors.email
+                ? 'border-red-400 bg-red-50 focus:ring-red-400'
+                : 'border-gray-300 focus:ring-blue-500'"
               autocomplete="email"
             />
-            <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email }}</p>
+            <Transition name="error">
+              <p v-if="errors.email" class="flex items-center gap-1 text-red-500 text-xs mt-1.5">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                {{ errors.email }}
+              </p>
+            </Transition>
           </div>
 
           <div class="mb-4">
@@ -28,8 +35,10 @@
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="••••••••"
-                class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                :class="{ 'border-red-400': errors.password }"
+                class="w-full px-4 py-2.5 pr-10 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-colors"
+                :class="errors.password
+                  ? 'border-red-400 bg-red-50 focus:ring-red-400'
+                  : 'border-gray-300 focus:ring-blue-500'"
                 autocomplete="current-password"
               />
               <button
@@ -40,7 +49,12 @@
                 <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
               </button>
             </div>
-            <p v-if="errors.password" class="text-red-500 text-xs mt-1">{{ errors.password }}</p>
+            <Transition name="error">
+              <p v-if="errors.password" class="flex items-center gap-1 text-red-500 text-xs mt-1.5">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                {{ errors.password }}
+              </p>
+            </Transition>
           </div>
 
           <div class="flex items-center justify-between mb-6">
@@ -51,7 +65,12 @@
             <button type="button" class="text-sm text-blue-600 hover:underline">Забыли пароль?</button>
           </div>
 
-          <p v-if="serverError" class="text-red-500 text-sm mb-4 text-center">{{ serverError }}</p>
+          <Transition name="error">
+            <div v-if="serverError" class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-3 mb-4">
+              <i class="bi bi-x-circle-fill shrink-0"></i>
+              {{ serverError }}
+            </div>
+          </Transition>
 
           <button
             type="submit"
@@ -122,3 +141,15 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.error-enter-active,
+.error-leave-active {
+  transition: all 0.2s ease;
+}
+.error-enter-from,
+.error-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+</style>
