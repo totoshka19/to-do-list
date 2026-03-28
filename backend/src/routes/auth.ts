@@ -51,7 +51,8 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
         role: user.role,
       },
     })
-  } catch {
+  } catch (err) {
+    console.error('Login error:', err)
     res.status(500).json({ message: 'Ошибка сервера' })
   }
 })
