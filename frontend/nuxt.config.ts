@@ -11,7 +11,12 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      // Переопределяется переменной окружения NUXT_PUBLIC_API_BASE на Vercel
       apiBase: 'http://localhost:3001',
     },
+  },
+
+  nitro: {
+    preset: 'vercel',
   },
 })
