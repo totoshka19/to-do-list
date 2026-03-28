@@ -1,5 +1,5 @@
 import { neon } from '@neondatabase/serverless'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import dotenv from 'dotenv'
 
 dotenv.config()
