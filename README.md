@@ -4,15 +4,16 @@
 
 ## Стек
 
-| Часть | Технология |
-|---|---|
-| Фронтенд | Nuxt 3 + Vue 3 + TypeScript + Pinia |
-| Стили | Tailwind CSS + Bootstrap Icons |
-| HTTP-клиент | Axios |
-| Бэкенд | Node.js + Express + TypeScript |
-| Авторизация | JWT |
-| БД | PostgreSQL (Neon) + Prisma ORM |
-| Деплой | Vercel |
+| Часть | Технология | Версия |
+|---|---|---|
+| Фронтенд | Nuxt + Vue 3 + TypeScript + Pinia | Nuxt 4, Vue 3.5 |
+| Стили | Tailwind CSS + Bootstrap Icons | Tailwind 4 |
+| HTTP-клиент | Axios | 1.x |
+| Бэкенд | Node.js + Express + TypeScript | Express 4.x |
+| Авторизация | JWT (jsonwebtoken) | 9.x |
+| Валидация | Zod | 3.x |
+| БД | PostgreSQL (Neon) + Prisma ORM | Prisma 7.x |
+| Деплой | Vercel | — |
 
 ## Функциональность
 
@@ -28,13 +29,13 @@
 ## Запуск локально
 
 ### Требования
-- Node.js 18+
-- Доступ к базе данных PostgreSQL (или аккаунт Neon)
+- Node.js 20+
+- Аккаунт [Neon](https://neon.tech) с базой данных PostgreSQL
 
 ### Установка
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/totoshka19/to-do-list.git
 cd to-do-list
 npm install
 ```
@@ -48,8 +49,8 @@ cp backend/.env.example backend/.env
 Заполни `backend/.env`:
 
 ```env
-DATABASE_URL="postgresql://..."
-DIRECT_URL="postgresql://..."
+DATABASE_URL="postgresql://..."   # pooled connection string из Neon
+DIRECT_URL="postgresql://..."     # direct connection string из Neon
 JWT_SECRET="your-secret-key"
 PORT=3001
 ```
@@ -95,5 +96,5 @@ npm run dev:frontend  # http://localhost:3000
 
 1. Создай новый проект на Vercel, корневая директория — `frontend`
 2. Добавь переменную окружения:
-   - `NUXT_PUBLIC_API_BASE` — URL задеплоенного бэкенда (например `https://todo-api.vercel.app`)
+   - `NUXT_PUBLIC_API_BASE` — URL задеплоенного бэкенда (например `https://your-backend.vercel.app`)
 3. Deploy
