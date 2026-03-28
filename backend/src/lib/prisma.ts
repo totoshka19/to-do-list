@@ -7,7 +7,9 @@ function createPrismaClient(): PrismaClient {
   if (process.env.NODE_ENV === 'production') {
     // Vercel serverless: WebSocket-адаптер нужен, т.к. TCP-соединения не поддерживаются
     const { PrismaNeon } = require('@prisma/adapter-neon')
-    const { Pool } = require('@neondatabase/serverless')
+    const { Pool, neonConfig } = require('@neondatabase/serverless')
+    const ws = require('ws')
+    neonConfig.webSocketConstructor = ws
     const pool = new Pool({ connectionString: process.env.DATABASE_URL })
     return new PrismaClient({ adapter: new PrismaNeon(pool) })
   }
