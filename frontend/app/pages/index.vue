@@ -117,6 +117,25 @@
         @update:page="setPage"
       />
     </main>
+
+    <!-- Модалка добавления/редактирования -->
+    <TaskModal
+      :open="modalOpen"
+      :task="editingTask"
+      @close="modalOpen = false"
+      @saved="handleSaved"
+    />
+
+    <!-- Подтверждение удаления -->
+    <ConfirmModal
+      :open="confirmOpen"
+      :loading="deleteLoading"
+      @confirm="confirmDelete"
+      @cancel="confirmOpen = false"
+    />
+
+    <!-- Toast-уведомления -->
+    <AppToast />
   </div>
 </template>
 
@@ -127,9 +146,16 @@ import type { Task } from '~/stores/tasks'
 const store = useTasksStore()
 const authStore = useAuthStore()
 const router = useRouter()
+const { add: addToast } = useToast()
 
 const searchInput = ref('')
 const sortValue = ref('date:desc')
+
+const modalOpen = ref(false)
+const editingTask = ref<Task | null>(null)
+const confirmOpen = ref(false)
+const deletingTask = ref<Task | null>(null)
+const deleteLoading = ref(false)
 
 const tabs = [
   { label: 'Все задачи', value: 'all' as const },
@@ -175,16 +201,38 @@ async function handleToggle(task: Task) {
   await store.updateTask(task.id, { isCompleted: !task.isCompleted })
 }
 
-function handleEdit(_task: Task) {
-  // этап 6
-}
-
-function handleDelete(_task: Task) {
-  // этап 6
-}
-
 function openCreateModal() {
-  // этап 6
+  editingTask.value = null
+  modalOpen.value = true
+}
+
+function handleEdit(task: Task) {
+  editingTask.value = task
+  modalOpen.value = true
+}
+
+function handleDelete(task: Task) {
+  deletingTask.value = task
+  confirmOpen.value = true
+}
+
+async function confirmDelete() {
+  if (!deletingTask.value) return
+  deleteLoading.value = true
+  try {
+    await store.deleteTask(deletingTask.value.id)
+    addToast('Задача удалена')
+    confirmOpen.value = false
+    deletingTask.value = null
+  } catch {
+    addToast('Не удалось удалить задачу', 'error')
+  } finally {
+    deleteLoading.value = false
+  }
+}
+
+function handleSaved() {
+  addToast(editingTask.value ? 'Задача обновлена' : 'Задача добавлена')
 }
 
 function handleLogout() {

@@ -60,7 +60,7 @@
               </div>
             </td>
             <td class="px-4 py-3.5">
-              <div class="flex items-center gap-0.5">
+              <div v-if="canModify(task)" class="flex items-center gap-0.5">
                 <button
                   @click="$emit('edit', task)"
                   class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
@@ -97,6 +97,10 @@ defineEmits<{
   edit: [task: Task]
   delete: [task: Task]
 }>()
+
+const authStore = useAuthStore()
+const canModify = (task: Task) =>
+  authStore.user?.role === 'ADMIN' || task.userId === authStore.user?.id
 
 function isToday(dateStr: string): boolean {
   const d = new Date(dateStr)

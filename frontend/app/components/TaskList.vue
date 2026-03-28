@@ -39,12 +39,14 @@
             <span v-else-if="task.priority === 'IMPORTANT'" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
               Важно
             </span>
-            <button @click="$emit('edit', task)" class="p-1.5 text-gray-400 hover:text-blue-600 rounded transition-colors">
-              <i class="bi bi-pencil text-sm"></i>
-            </button>
-            <button @click="$emit('delete', task)" class="p-1.5 text-gray-400 hover:text-red-600 rounded transition-colors">
-              <i class="bi bi-trash text-sm"></i>
-            </button>
+            <template v-if="canModify(task)">
+              <button @click="$emit('edit', task)" class="p-1.5 text-gray-400 hover:text-blue-600 rounded transition-colors">
+                <i class="bi bi-pencil text-sm"></i>
+              </button>
+              <button @click="$emit('delete', task)" class="p-1.5 text-gray-400 hover:text-red-600 rounded transition-colors">
+                <i class="bi bi-trash text-sm"></i>
+              </button>
+            </template>
           </div>
         </div>
         <div v-if="task.description" class="mt-2 text-xs text-gray-500 line-clamp-2 pl-6">
@@ -74,6 +76,10 @@ defineEmits<{
   edit: [task: Task]
   delete: [task: Task]
 }>()
+
+const authStore = useAuthStore()
+const canModify = (task: Task) =>
+  authStore.user?.role === 'ADMIN' || task.userId === authStore.user?.id
 
 function isToday(dateStr: string): boolean {
   const d = new Date(dateStr)
